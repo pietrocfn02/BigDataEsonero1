@@ -70,7 +70,9 @@ select max(tmp_t.average) from (select skills.languagename as lang, avg(skills.l
 
 
 
+-- Questa è sicuramente sbagliata --------------------------------------------------------------
 
+select x.province from (select province, count(*) as count, (select min(tmp_t.tmp) from (select province, count(*) as tmp from city group by province) as tmp_t) as min from city group by province) as x where x.count = x.min;
 
 
 
