@@ -15,4 +15,62 @@ hdfs dfs -mkdir esercizio2
 hdfs dfs -mv {timestamp}.txt esercizio2
 
 
-Adesso è il momento di creare la tabella
+Adesso è il momento di creare la tabella (su un nuovo db chiamato esonero)
+
+
+create database esonero;
+use esonero;
+
+
+
+create external table esercizio2(name string, surname string, age int, livingIn struct<name:string, province:string>, languages array<struct<name:string, description:string, level:int>>) row format serde 'org.apache.hive.hcatalog.data.JsonSerDe' stored as textfile location 'esercizio2';
+
+
+
+create table Entity(name string, surname string, age int) row format delimited fields terminated by '\t' stored as textfile location 'esercizio2_entity';
+
+
+create table Language (name string, description string) row format delimited fields terminated by '\t' stored as textfile location 'esercizio2_Language';
+
+
+ create table City (name string, province string) row format delimited fields terminated by '\t' stored as textfile location 'esercizio2_city';
+ 
+ 
+from esercizio2 insert into entity select name, surname,age;
+
+
+from esercizio2 insert into city select livingin.name, livingin.province;
+
+
+from (select explode(languages) from esercizio2) as x insert into language select x.col.name, x.col.description;
+
+
+ create table lives (cityname string, personname string) row format delimited fields terminated by '\t' stored as textfile location 'esercizio2_lives';
+ 
+ 
+ create table skills (personname string, languagename string, level int) row format delimited fields terminated by '\t' stored as textfile location 'esercizio2_skills';
+ 
+ 
+from (select name, explode(languages) from esercizio2) as x insert into language skills x.name, x.col.name;
+
+
+from (select name, livingin.name from esercizio2) as x insert into lives personname, cityname;
+
+
+select x.la from (select passengers, avg(level) as avg_l, (select max(tmp_t.tmp) from (select skills.languagename as lang, avg(skills.level) as average from skills group by skills.languagename) as tmp_t) as max from skills group by languagename) as x where x.avg_l = x.max;
+
+
+select skills.languagename as lang, avg(skills.level) as average from skills group by skills.languagename;
+
+
+
+select max(tmp_t.average) from (select skills.languagename as lang, avg(skills.level) as average from skills group by skills.languagename) as tmp_t;
+
+
+
+
+
+
+
+
+
