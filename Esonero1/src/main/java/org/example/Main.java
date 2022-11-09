@@ -9,22 +9,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try {
-            File myObj = new File("prova.txt");
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        }
+
         Random r = new Random();
 
-        try {
-            FileWriter myWriter = new FileWriter(""+System.currentTimeMillis()+".txt");
+
+            String e1="";
+            String filename = ""+System.currentTimeMillis()+".txt";
             for (int j = 0; j < 10000; j++) {
                 String[] programmingLanguages = {"Java", "Python ", "Javascript"};
                 int languages = r.nextInt(3);
@@ -36,15 +26,12 @@ public class Main {
                 int x = r.nextInt(156);
                 int prov = x % 10;
                 Employee ginoTmp = new Employee("Gino " + j, "Gino " + String.valueOf(j % 26), 99, new City("City " + x, "Province " + prov), pls);
-                String e1 = String.valueOf(ginoTmp.getJson());
-                myWriter.write(e1);
+                e1+= String.valueOf(ginoTmp.getJson())+"\n";
             }
-            myWriter.close();
+            HdfsManager.getInstance().createNewFile(filename, e1);
 
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+
+
 
     }
 
