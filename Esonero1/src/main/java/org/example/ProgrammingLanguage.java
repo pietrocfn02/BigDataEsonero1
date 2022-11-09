@@ -6,15 +6,18 @@ public class ProgrammingLanguage {
         private String name;
         private String description;
 
+        private Integer level;
+
 
         public String getJson() {
                 Gson g = new Gson();
                 return g.toJson(this);
         }
 
-        public ProgrammingLanguage (String name, String description) {
+        public ProgrammingLanguage (String name, String description, Integer level) {
                 this.name = name;
                 this.description = description;
+                this.level = level;
         }
 
         public String getName() {
@@ -31,5 +34,13 @@ public class ProgrammingLanguage {
 
         public void setDescription(String description) {
                 this.description = description;
+        }
+
+        public Integer getLevel() {
+                return level;
+        }
+
+        public void setLevel(Integer level) {
+                this.level = level;
         }
 }

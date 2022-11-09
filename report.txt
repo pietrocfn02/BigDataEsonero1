@@ -1,0 +1,18 @@
+
+Nota: {timestamp} è un placeholder System.currentTimeMillis();
+
+Il jar generato nell'esercizio 1 scrive nell hdfs un file denominato {timestamp}.txt
+contenente 10000 righe, ognuna un json (generati con dei random) relativo ad un dipendente, le sue skill e una città ecc ecc
+
+
+Dato che il file viene creato nella directory principale dell'hdfs è necessario spostarla.
+
+
+Dunque,
+
+
+hdfs dfs -mkdir esercizio2
+hdfs dfs -mv {timestamp}.txt esercizio2
+
+
+Adesso è il momento di creare la tabella

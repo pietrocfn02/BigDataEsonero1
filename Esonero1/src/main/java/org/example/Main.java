@@ -21,7 +21,7 @@ public class Main {
                 ProgrammingLanguage[] pls = new ProgrammingLanguage[languages];
                 for (int i = 0; i < languages; i++) {
                     int version = r.nextInt(8);
-                    pls[i] = new ProgrammingLanguage(programmingLanguages[i], "Version " + i + " of " + programmingLanguages[i]);
+                    pls[i] = new ProgrammingLanguage(programmingLanguages[i], "Version " + i + " of " + programmingLanguages[i], r.nextInt(10));
                 }
                 int x = r.nextInt(156);
                 int prov = x % 10;
